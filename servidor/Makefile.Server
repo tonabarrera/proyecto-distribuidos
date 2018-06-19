@@ -1,0 +1,2 @@
+Server: server.cpp
+	g++ server.cpp -o Server
