@@ -1,0 +1,10 @@
+servidorb:servidor_busqueda.cpp SocketDatagrama.o Archivo.o PaqueteDatagrama.o
+	g++ Archivo.o servidor_busqueda.cpp SocketDatagrama.o PaqueteDatagrama.o -o servidorb
+SocketDatagrama.o: SocketDatagrama.cpp
+	g++ SocketDatagrama.cpp -c -Wall
+PaqueteDatagrama.o: PaqueteDatagrama.cpp
+	g++ PaqueteDatagrama.cpp -c -Wall
+Archivo.o:Archivo.cpp
+	g++ Archivo.cpp -c -Wall
+clean:
+	rm ./servidorb *.o
