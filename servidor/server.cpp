@@ -1,6 +1,7 @@
 #include "Archivo.h"
 #include <cstring>
 
+
 struct Voto {
     char RFC[14];
     char numTel[11];

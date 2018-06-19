@@ -2,46 +2,37 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+
+struct Mensaje {
+    char numTel[11];
+    char rfc[14];
+    short int partido;
+};
 using namespace std;
+
 int main(int argc, char *argv[])
 {
-	if(argc!=2)
-	{
-		printf("Modo de uso: servidor puerto");
-		exit(1);
-	}
-	int port=atoi(argv[1]);
-	typedef struct 
-	{
-		char numTel[10];
-		char rfc[13];
-		short int partido;
-	}mensaje;
-	mensaje *votante;
+    if(argc!=2) {
+        printf("Modo de uso: servidor puerto");
+        exit(1);
+    }
+    int port=atoi(argv[1]);
+    struct Mensaje *votante;
     SocketDatagrama socket(port);
     int recibido=0,res;
-    while (1) 
-	{
-        PaqueteDatagrama Cliente(sizeof(mensaje));
-        recibido=socket.recibe(Cliente);
+    while (true) {
+        printf("%s\n", "Esperando...");
+        PaqueteDatagrama cliente(sizeof(struct Mensaje));
+        recibido=socket.recibe(cliente);
         if(recibido<0)
           continue;
-        votante = (mensaje *)Cliente.obtieneDatos();
-	printf("Numero Telefonico: "); 
-	for(int i=0;i<10;i++)
-	{
-		printf("%c",votante->numTel[i]);
-	}
-	printf("\nRFC: ");
-	for(int j=0;j<13;j++)
-	{
-		printf("%c",votante->rfc[j]);
-	}
-	printf("\n");
-	printf("Partido: %d\n",votante->partido);
-	res=8;
-        PaqueteDatagrama Servidor((char *) &res,sizeof(int),Cliente.obtieneDireccion(),Cliente.obtienePuerto());
-        socket.envia(Servidor);
+        votante = (struct Mensaje *)cliente.obtieneDatos();
+        printf("Numero Telefonico: %s\n", votante->numTel); 
+        printf("RFC: %s\n", votante->rfc);
+        printf("Partido: %d\n",votante->partido);
+        res=8;
+        PaqueteDatagrama servidor((char *) &res,sizeof(int),cliente.obtieneDireccion(),cliente.obtienePuerto());
+        socket.envia(servidor);
     }
     return 0;
 }
