@@ -104,56 +104,50 @@ short int generaPartido(void){
 	//Votos AMLO.
 	if(aux < 35){
 		candidatos[AMLO]++;
-		aux = rand() % 3;
-		switch(aux){
-			case 0:
+		aux = rand() % 10;
+		if(aux < 3){
 			partidos[PT]++;
-				return PT;
-				break;
-			case 1:
-				partidos[MORENA]++;
-				return MORENA;
-				break;
-			case 2:
-				partidos[ES]++;
-				return ES;
-				break;
+			return PT;
+		}
+		if(aux < 8 && aux >= 3){
+			partidos[MORENA]++;
+			return MORENA;
+		}
+		if(aux < 10){
+			partidos[ES]++;
+			return ES;
 		}
 	}//Votos Anaya.
 	else if(aux >= 35 && aux < 70){
 		candidatos[ANAYA]++;
-		aux = rand() % 3;
-		switch(aux){
-			case 0:
-				partidos[PAN]++;
-				return PAN;
-				break;
-			case 1:
-				partidos[PRD]++;
-				return PRD;
-				break;
-			case 2:
-				partidos[MC]++;
-				return MC;
-				break;
+		aux = rand() % 10;
+		if(aux < 5){
+			partidos[PAN]++;
+			return PAN;
+		}
+		if(aux >= 5 && aux <8){
+			partidos[PRD]++;
+			return PRD;
+		}
+		if(aux >= 8){
+			partidos[MC]++;
+			return MC;
 		}
 	}//Votos Meade.
 	else if(aux >= 70 && aux < 90){
 		candidatos[MEADE]++;
-		aux = rand() % 3;
-		switch(aux){
-			case 0:
-				partidos[PRI]++;
-				return PRI;
-				break;
-			case 1:
-				partidos[VERDE]++;
-				return VERDE;
-				break;
-			case 2:
-				partidos[NA]++;
-				return NA;
-				break;
+		aux = rand() % 10;
+		if(aux < 5){
+			partidos[PRI]++;
+			return PRI;
+		}
+		if(aux >= 5 && aux < 8){
+			partidos[VERDE]++;
+			return VERDE;
+		}
+		if(aux >=8){ 
+			partidos[NA]++;
+			return NA;
 		}
 	}//Votos Bronco.
 	else if(aux >= 90){
@@ -212,5 +206,10 @@ void enviaMensaje(char *IP,int puerto, Mensaje *mensaje){
 	printf("MORENA: %d\n", partidos[MORENA]);
 	printf("ES: %d\n", partidos[ES]);
 	printf("BRONCO: %d\n", partidos[BRONCO]);
+	printf("--------------------------\n");
+	printf("AMLO: %d\n", candidatos[AMLO]);
+	printf("Anaya: %d\n", candidatos[ANAYA]);
+	printf("Meade: %d\n", candidatos[MEADE]);
+	printf("Bronco: %d\n", candidatos[BRONCOC]);
 	m.unlock();
 }
