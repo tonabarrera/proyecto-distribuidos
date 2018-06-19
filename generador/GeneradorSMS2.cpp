@@ -8,22 +8,6 @@
 #include "PaqueteDatagrama.h"
 #include "SocketDatagrama.h"
 using namespace std;
-#define PAN 0
-#define PRI 1
-#define PRD 2
-#define VERDE 3
-#define PT 4
-#define MC 5
-#define NA 6
-#define MORENA 7
-#define ES 8
-#define BRONCO 9
-
-#define AMLO 0
-#define ANAYA 1
-#define MEADE 2
-#define BRONCOC 3
-
 #define IP1 "10.100.77.38"
 #define IP2	"10.100.79.185"
 #define IP3	"10.100.67.49"
@@ -39,10 +23,7 @@ short int generaPartido(void);
 void llenaMensaje(Mensaje *mensaje);
 void enviaMensaje(char *IP,int puerto, Mensaje *mensaje);
 mutex m;
-int partidos[10];
-int candidatos[4];
-int banderas[3];
-
+int t1 = 0, t2 = 0, t3 = 0;
 int main(int argc, char const *argv[])
 {
 	FILE *numeros;
@@ -66,12 +47,15 @@ int main(int argc, char const *argv[])
 	// 	printf("\n%d\n", mensaje.partido);
 	// }
 	Mensaje mensaje;
-	for(i = 0;2800000;i++){
+	for(i = 0;i < 2800000;i++){
 		llenaMensaje(&mensaje);
 		thread th1(enviaMensaje,ip1,7000,&mensaje),th2(enviaMensaje,ip2,7000,&mensaje),th3(enviaMensaje,ip3,7000,&mensaje);
-		th1.join();
-		th2.join();
-		th3.join();
+		if(t1 == 0)
+			th1.join();
+		if(t2 == 0)
+			th2.join();
+		if(t3 == 0)
+			th3.join();
 	}
 	return 0;
 };
@@ -103,63 +87,49 @@ short int generaPartido(void){
 	aux = rand() % 100;
 	//Votos AMLO.
 	if(aux < 35){
-		candidatos[AMLO]++;
 		aux = rand() % 3;
 		switch(aux){
 			case 0:
-			partidos[PT]++;
-				return PT;
+				return 4;
 				break;
 			case 1:
-				partidos[MORENA]++;
-				return MORENA;
+				return 7;
 				break;
 			case 2:
-				partidos[ES]++;
-				return ES;
+				return 8;
 				break;
 		}
 	}//Votos Anaya.
 	else if(aux >= 35 && aux < 70){
-		candidatos[ANAYA]++;
 		aux = rand() % 3;
 		switch(aux){
 			case 0:
-				partidos[PAN]++;
-				return PAN;
+				return 0;
 				break;
 			case 1:
-				partidos[PRD]++;
-				return PRD;
+				return 2;
 				break;
 			case 2:
-				partidos[MC]++;
-				return MC;
+				return 5;
 				break;
 		}
 	}//Votos Meade.
 	else if(aux >= 70 && aux < 90){
-		candidatos[MEADE]++;
 		aux = rand() % 3;
 		switch(aux){
 			case 0:
-				partidos[PRI]++;
-				return PRI;
+				return 1;
 				break;
 			case 1:
-				partidos[VERDE]++;
-				return VERDE;
+				return 3;
 				break;
 			case 2:
-				partidos[NA]++;
-				return NA;
+				return 6;
 				break;
 		}
 	}//Votos Bronco.
 	else if(aux >= 90){
-		candidatos[BRONCOC]++;
-		partidos[BRONCO]++;
-		return BRONCO;
+		return 9;
 	}
 };
 void llenaMensaje(Mensaje *mensaje){
@@ -201,16 +171,7 @@ void enviaMensaje(char *IP,int puerto, Mensaje *mensaje){
 		r = socket.recibeTimeout(paquete,2,500);
 		printf("%s\n",IP );
 	}while(r < 1 && i++ < 6);
-	printf("--------------------------\n");
-	printf("PAN: %d\n", partidos[PAN]);
-	printf("PRI: %d\n", partidos[PRI]);
-	printf("PRD: %d\n", partidos[PRD]);
-	printf("VERDE: %d\n", partidos[VERDE]);
-	printf("PT: %d\n", partidos[PT]);
-	printf("MC: %d\n", partidos[MC]);
-	printf("NA: %d\n", partidos[NA]);
-	printf("MORENA: %d\n", partidos[MORENA]);
-	printf("ES: %d\n", partidos[ES]);
-	printf("BRONCO: %d\n", partidos[BRONCO]);
+	if(i > 7)
+		t1 += 1;
 	m.unlock();
 }
