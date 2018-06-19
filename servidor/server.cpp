@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]){
     printf("%s\n",voto->RFC);
     printf("%s\n",voto->numTel);
     printf("%d\n",voto->partido);
-    Archivo archivo("database.txt", O_WRONLY|O_TRUNC|O_CREAT|O_RDONLY, 0666);
+    Archivo archivo("database.txt", O_WRONLY|O_TRUNC|O_CREAT, 0666);
     printf("Escribio %lu \n", archivo.escribe(voto, sizeof(struct Voto)));
 
     printf("Escribio voto 2 %lu \n", archivo.escribe(voto2, sizeof(struct Voto)));
