@@ -8,5 +8,35 @@
 </head>
 <body>
     <h1>Consulta de votos</h1>
+    <label for="rfc">RFC</label>
+    <input type="text" id="rfc">
+    <input type="button" id="btnConsultar" value="CONCULTAR">
+    <script src="./jquery.min.js"></script>
+    <script>
+        $('#btnConsultar').on('click', function(ev) {
+            let data = {
+                rfc:'NADA'
+            };
+            data.rfc = $('#rfc').val();
+            let url = 'http://localhost:8000/rfc/' + data.rfc;
+            //let url = 'http://localhost:8888';
+            console.log(data);
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: url,
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (res) {
+                    console.log("success");
+                    console.log(res);
+                },
+                error: function (err) {
+                    console.log("error");
+                    console.log(err);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
