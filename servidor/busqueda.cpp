@@ -10,7 +10,7 @@ struct Voto {
 char partidos[10][10]={"PAN","PRI","PRD","VERDE","PT","MC","NA","MORENA","ES","BRONCO"};
 int main()
 {
-	char numTel[10];
+	char numTel[11];
 	int nbytes;
 	int encontrado=0;
 	Archivo lectura("database.txt");
@@ -18,6 +18,7 @@ int main()
 	struct Voto *otro = (struct Voto *) malloc(sizeof(struct Voto));
 	printf("Ingrese el número a buscar: ");
 	scanf("%s",numTel);
+	printf("%s\n",numTel);
 	while((nbytes = lectura.lee(sizeof(struct Voto))) > 0 && encontrado==0)
 	{
 		memcpy(otro,lectura.get_contenido(),sizeof(struct Voto));
