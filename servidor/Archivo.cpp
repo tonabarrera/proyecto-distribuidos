@@ -20,8 +20,8 @@ Archivo::Archivo(string filename, int banderas, mode_t modo) {
 
 size_t Archivo::lee(size_t nbytes) {
     printf("num_bytes: %lu\n", num_bytes);
-    contenido = (char*) realloc(contenido, num_bytes+nbytes);
-    size_t n = read(fd, contenido+num_bytes, nbytes);
+    contenido = (char*) realloc(contenido, nbytes);
+    size_t n = read(fd, contenido, nbytes);
     num_bytes += n;
     return n;
 }
