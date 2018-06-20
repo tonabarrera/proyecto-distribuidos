@@ -1,0 +1,7 @@
+busqueda:busqueda.cpp Archivo.o 
+	g++ Archivo.o busqueda.cpp -o busqueda
+Archivo.o:Archivo.cpp
+	g++ Archivo.cpp -c -Wall
+clean:
+	rm ./busqueda *.o
+
